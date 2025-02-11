@@ -3,7 +3,9 @@ package com.example.esemkavote2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var etUsername : TextInputEditText
     private lateinit var etPassword : TextInputEditText
     private lateinit var btnLogin : Button
+    private lateinit var txtRegis : TextView
 
     private val loginURL = "https://labapi.smkn2kra.sch.id/api/v1/auth/signin"
 
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         etUsername = findViewById(R.id.editText1)
         etPassword = findViewById(R.id.editText2)
         btnLogin = findViewById(R.id.loginButton)
+        txtRegis = findViewById(R.id.txtRegis)
+        txtRegis.movementMethod = LinkMovementMethod.getInstance();
 
         btnLogin.setOnClickListener {
             val username = etUsername.text.toString().trim()
@@ -43,6 +48,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Email dan Password harus diisi!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        txtRegis.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
+
     }
 
     private fun loginUser(username: String, password: String) {

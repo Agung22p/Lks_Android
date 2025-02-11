@@ -3,7 +3,10 @@ package com.example.esemkavote2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
+import android.text.method.MovementMethod
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etPassword : TextInputEditText
     private lateinit var etCPassword : TextInputEditText
     private lateinit var registerButton : Button
+    private lateinit var txtLogin : TextView
 
 
     private val regisURL = "https://labapi.smkn2kra.sch.id/api/v1/auth/signup"
@@ -38,6 +42,8 @@ class SignUpActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.editText2)
         etCPassword = findViewById(R.id.editText3)
         registerButton = findViewById(R.id.registerButton)
+        txtLogin = findViewById(R.id.txtLogin)
+        txtLogin.movementMethod = LinkMovementMethod.getInstance()
 
         registerButton.setOnClickListener {
             val username = etUsername.text.toString().trim()
@@ -55,6 +61,9 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+        txtLogin.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
     private fun registerUser(username: String, password: String) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -78,8 +87,8 @@ class SignUpActivity : AppCompatActivity() {
                 val responseMessage = conn.responseMessage
 
                 withContext(Dispatchers.Main) {
-                    if (responseCode == HttpURLConnection.HTTP_CREATED) {
-                        Toast.makeText(this@SignUpActivity, "Registrasi Berhasil!", Toast.LENGTH_SHORT).show()
+                    if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                        Toast.makeText(this@SignUpActivity, "Registrasi Berhasil! Silahkan login", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
                         finish()
                     } else {
