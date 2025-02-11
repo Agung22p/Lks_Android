@@ -3,6 +3,7 @@ package com.example.esemkavote2
 import GameAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
@@ -33,7 +34,10 @@ class HomeActivity : AppCompatActivity() {
     data class Game (
         val title: String,
         val description: String,
-        val author: String
+        val author: String,
+        val score: String,
+        val slug: String,
+        val thumbnail: String
     )
 
     private fun fetchData() {
@@ -63,7 +67,10 @@ class HomeActivity : AppCompatActivity() {
                         val game = Game(
                             title = item.getString("title"),
                             description = item.getString("description"),
-                            author = item.getString("author")
+                            author = item.getString("author"),
+                            score = item.getString("scoreCount"),
+                            slug = item.getString("slug"),
+                            thumbnail = item.getString("thumbnail")
                         )
                         games.add(game)
                     }
