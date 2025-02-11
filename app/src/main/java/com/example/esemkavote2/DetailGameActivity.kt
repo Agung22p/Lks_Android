@@ -71,7 +71,7 @@ class DetailGameActivity : AppCompatActivity() {
                     val description = json.getString("description")
                     val author = json.getString("author")
                     val score = json.getString("scoreCount")
-                    val imageUrl = "https://labapi.smkn2kra.sch.id/" + json.getString("thumbnail").replace("gs/", "games/")
+                    val imageUrl = "https://labapi.smkn2kra.sch.id/" + json.getString("thumbnail")
 
                     withContext(Dispatchers.Main) {
                         titleText.text = title
